@@ -18,7 +18,7 @@
 clear; %close all; clc;
 
 % Basic Parameters
-    tEnd = 100; % output time
+    tEnd = 5.5; % output time
       IC = 1;  % 
 fluxFunc = {'buckley','burgers+','cubic+'};
    debug = true;
@@ -30,7 +30,7 @@ dx=1/100; x=(-4*pi:dx:4*pi); nx=numel(x);
 u0=CommonIC(x,11); % <-- See more details in CommonIC.m
 
 % Compute exact solution
-[xe,ue]=quasiAnaliticalSolver(x,u0,tEnd,fluxFunc{3},debug);
+[xe,ue]=quasiAnaliticalSolver(x,u0,tEnd,fluxFunc{1},debug);
 
 % Plot IC and exact Solution
 figure(2); plot(x,u0,'-.k',xe,ue,'-r'); 
