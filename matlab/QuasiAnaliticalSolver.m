@@ -1,4 +1,4 @@
-function [X,U,PHI]=quasiAnaliticalSolver(varargin)
+function [X,U,PHI]=QuasiAnaliticalSolver(varargin)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %   Quasi-analytical solutions for scalar nonlinear conservation models
@@ -60,13 +60,13 @@ switch fluxFunc
         df= @(u) u.^2; % the derivative f'(u)
         Df= @(u) 2*u.^3/3; % and Df: u*f'(u)-f(u)
         I = @(u) u.^4/4; % I(u): energy flux
-%     case 'buckley' % buckley-leverett equation (traditional sign, but not working yet!)
-%         a = 1/4; % constant parameter 
-%         f = @(u) -(u.^2)./(u.^2 + a*(1-u).^2); % the flux function
-%         df= @(u) -2*a*u.*(1-u)./(u.^2 + a*(1-u).^2).^2; % the derivative f'(u)
-%         Df= @(u) (a*(u.^2-4*u+3).*u.^2+u.^4)./(u.^2 + a*(1-u).^2).^2; % and Df: u*f'(u)-f(u)
-%         w = @(u) (a+1)*u/sqrt(a)-sqrt(a); % dummy function
-%         I = @(u) (sqrt(a)/(1+a)^2)*(w(u)+(a-1)*atan(w(u))+sqrt(a)*log(1+w(u).^2)); % I(u): energy flux
+    % case 'buckley' % buckley-leverett equation (traditional sign, but not working yet!)
+        % a = 1/4; % constant parameter 
+        % f  = @(u) -(u.^2)./(u.^2 + a*(1-u).^2);
+        % df = @(u) -2*a*u.*(1-u)./(u.^2 + a*(1-u).^2).^2;
+        % Df = @(u) (u.^2).*(a + (1+a)*u.^2)./(u.^2 + a*(1-u).^2).^2;  % u*df - f
+        % w  = @(u) (a+1)*u/sqrt(a)-sqrt(a);
+        % I  = @(u) -(sqrt(a)/(1+a)^2)*(w(u)+(a-1)*atan(w(u))+sqrt(a)*log(1+w(u).^2));
     case 'buckley' % buckley-leverett equation (Couluovrat convention)
         a = 0.5; % constant parameter 
         f = @(u) (u.^2)./(u.^2 + a*(1-u).^2); % the flux function
@@ -152,8 +152,8 @@ for j=1:nBranches-1
                 un_sh(k)= interp1(y(Branches(2*j-1):Branches(2*j)),u0(Branches(2*j-1):Branches(2*j)),intersection(k),'linear');
                 phi_sh = interp1(y(Branches(2*k-1):Branches(2*k)),phi(Branches(2*k-1):Branches(2*k)),intersection(k),'linear');
                 entropyCondition(k) = (I(up_sh(k))-I(un_sh(k))) > ((f(up_sh(k))-f(un_sh(k))).*(up_sh(k)+un_sh(k))/2);
-            if debug; subplot(323); plot([intersection(k),intersection(k)],[up_sh(k),un_sh(k)],'.-k'); hold on; end
-            if debug; subplot(324); plot(intersection(k),phi_sh,'.k'); hold on; end
+                if debug; subplot(323); plot([intersection(k),intersection(k)],[up_sh(k),un_sh(k)],'.-k'); hold on; end
+                if debug; subplot(324); plot(intersection(k),phi_sh,'.k'); hold on; end
             end
         end
         % If phi-branches do not explicitly in the solution grid
@@ -182,7 +182,6 @@ if debug; subplot(324); hold off; ylabel('\phi(x,t)'); end
 % (b) those which do not cross a branch of higher number;
 % (c) similarly, those which do come from a branch that does not cross a 
 %     previously lower branch.
-% 
 
 % Examing the full path (The simplest solution first!)
 path = nchoosek(1:nBranches,nBranches); 

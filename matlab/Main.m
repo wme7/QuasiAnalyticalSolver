@@ -19,18 +19,18 @@ clear; %close all; clc;
 
 % Basic Parameters
     tEnd = 5.5; % output time
-      IC = 1;  % 
-fluxFunc = {'buckley','burgers+','cubic+'};
+      IC = 11;  % 
+fluxName = {'buckley','burgers','cubic'};
    debug = true;
 
 % Build base mesh
 dx=1/100; x=(-4*pi:dx:4*pi); nx=numel(x);
 
 % Load and initial condition
-u0=CommonIC(x,11); % <-- See more details in CommonIC.m
+u0=CommonIC(x,IC); % <-- See more details in CommonIC.m
 
 % Compute exact solution
-[xe,ue]=quasiAnaliticalSolver(x,u0,tEnd,fluxFunc{1},debug);
+[xe,ue]=QuasiAnaliticalSolver(x,u0,tEnd,fluxName{1},debug);
 
 % Plot IC and exact Solution
 figure(2); plot(x,u0,'-.k',xe,ue,'-r'); 
